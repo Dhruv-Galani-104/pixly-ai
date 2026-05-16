@@ -186,8 +186,8 @@ const Editor = () => {
       const newImageUrl =
         remainingEffects.length > 0
           ? `${uploadedImage}?tr=${remainingEffects
-              .map((effect) => getImageKitTransform(effect))
-              .join(",")}`
+            .map((effect) => getImageKitTransform(effect))
+            .join(",")}`
           : uploadedImage;
       setProcessedImage(newImageUrl);
       return;
@@ -304,7 +304,7 @@ const Editor = () => {
   const handleExport = (format: string) => {
     if (!processedImage) return;
 
-    saveAs(processedImage, `pixora-${Date.now()}.${format}`);
+    saveAs(processedImage, `pixly-AI-${Date.now()}.${format}`);
   };
 
   return (
@@ -396,19 +396,17 @@ const Editor = () => {
                   <Button
                     key={tool.id}
                     variant={isActive ? "default" : "outline"}
-                    className={`w-full justify-start shadow-glass transition-all ${
-                      isActive
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "border-gray-600 hover:border-primary/30"
-                    }`}
+                    className={`w-full justify-start shadow-glass transition-all ${isActive
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "border-gray-600 hover:border-primary/30"
+                      }`}
                     onClick={() => handleToolClick(tool.id)}
                     disabled={isDisabled}
                     title={tool.description}
                   >
                     <tool.icon
-                      className={`h-4 w-4 mr-2 ${
-                        isProcessing ? "animate-pulse" : ""
-                      }`}
+                      className={`h-4 w-4 mr-2 ${isProcessing ? "animate-pulse" : ""
+                        }`}
                     />
                     <div className="flex-1 text-left">
                       <div className="font-medium">{tool.name}</div>
@@ -472,19 +470,17 @@ const Editor = () => {
                       key={tool.id}
                       variant={isActive ? "default" : "outline"}
                       size="sm"
-                      className={`justify-start shadow-glass transition-all ${
-                        isActive
-                          ? "bg-primary text-primary-foreground border-primary"
-                          : "border-gray-600 hover:border-primary/30"
-                      }`}
+                      className={`justify-start shadow-glass transition-all ${isActive
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "border-gray-600 hover:border-primary/30"
+                        }`}
                       onClick={() => handleToolClick(tool.id)}
                       disabled={isDisabled}
                       title={tool.description}
                     >
                       <tool.icon
-                        className={`h-3 w-3 mr-2 ${
-                          isProcessing ? "animate-pulse" : ""
-                        }`}
+                        className={`h-3 w-3 mr-2 ${isProcessing ? "animate-pulse" : ""
+                          }`}
                       />
                       <span className="text-xs">{tool.name}</span>
                       {isActive && !isProcessing && (
@@ -543,27 +539,26 @@ const Editor = () => {
 
                   {(currentJob.status === "processing" ||
                     currentJob.status === "queued") && (
-                    <div className="w-full bg-muted rounded-full h-2">
-                      <div
-                        className={`h-2 rounded-full transition-all duration-300 ${
-                          currentJob.status === "queued"
+                      <div className="w-full bg-muted rounded-full h-2">
+                        <div
+                          className={`h-2 rounded-full transition-all duration-300 ${currentJob.status === "queued"
                             ? "bg-muted-foreground animate-pulse"
                             : "bg-gradient-primary"
-                        }`}
-                        style={{
-                          width:
-                            currentJob.status === "queued"
-                              ? "100%"
-                              : `${currentJob.progress}%`,
-                        }}
-                      />
-                      <div className="text-xs text-muted-foreground mt-1 text-center">
-                        {currentJob.status === "queued" && "Initializing..."}
-                        {currentJob.status === "processing" &&
-                          "Waiting for AI to complete transformation..."}
+                            }`}
+                          style={{
+                            width:
+                              currentJob.status === "queued"
+                                ? "100%"
+                                : `${currentJob.progress}%`,
+                          }}
+                        />
+                        <div className="text-xs text-muted-foreground mt-1 text-center">
+                          {currentJob.status === "queued" && "Initializing..."}
+                          {currentJob.status === "processing" &&
+                            "Waiting for AI to complete transformation..."}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                 </div>
               ) : (
                 <p className="text-muted-foreground text-sm">

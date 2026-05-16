@@ -8,6 +8,7 @@ import {
   ImageKitUploadNetworkError,
   upload,
 } from "@imagekit/next";
+import { useSession } from "next-auth/react";
 import PaymentModal from "@/components/modals/payment-modal";
 
 interface UploadZoneProps {
@@ -15,6 +16,7 @@ interface UploadZoneProps {
 }
 
 const UploadZone = ({ onImageUpload }: UploadZoneProps) => {
+  const { status } = useSession();
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -26,10 +28,14 @@ const UploadZone = ({ onImageUpload }: UploadZoneProps) => {
     canUpload: boolean;
   } | null>(null);
 
-  // check the usage on component mount
+  // check the usage on component mount or auth change
   useEffect(() => {
-    checkUsage().catch(console.error);
-  }, []);
+    if (status === "authenticated") {
+      checkUsage().catch(console.error);
+    } else if (status === "unauthenticated") {
+      setUsageData(null);
+    }
+  }, [status]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();

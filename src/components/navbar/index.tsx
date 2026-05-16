@@ -1,9 +1,18 @@
 "use client";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Menu, Sparkles, X } from "lucide-react";
 import { Button } from "../ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -78,13 +87,59 @@ const Navbar = () => {
             >
               Pricing
             </button>
-            <Button
-              variant="hero"
-              className="w-full font-semibold"
-              onClick={handleSubmit}
-            >
-              {session?.user ? "Launch App" : "Sign In"}
-            </Button>
+            
+            {session?.user ? (
+              <div className="flex items-center space-x-4">
+                <Button
+                  variant="hero"
+                  className="font-semibold"
+                  onClick={handleSubmit}
+                >
+                  Launch App
+                </Button>
+                
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-transform hover:scale-105">
+                      <Avatar className="h-10 w-10 border-2 border-primary/20">
+                        <AvatarImage src={(session.user as any).avatar || session.user.image} alt={session.user.name || "User"} />
+                        <AvatarFallback>{session.user.name?.charAt(0) || "U"}</AvatarFallback>
+                      </Avatar>
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56 glass border-card-border">
+                    <DropdownMenuLabel className="font-normal">
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none text-foreground">{session.user.name}</p>
+                        <p className="text-xs leading-none text-muted-foreground">{session.user.email}</p>
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator className="bg-border" />
+                    <DropdownMenuItem className="flex justify-between items-center focus:bg-primary/5 cursor-default">
+                      <span className="text-foreground">Current Plan</span>
+                      <span className="text-xs font-semibold bg-primary/20 text-primary px-2 py-1 rounded-full">
+                        {(session.user as any).plan || "Free"}
+                      </span>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-border" />
+                    <DropdownMenuItem 
+                      className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10" 
+                      onClick={() => signOut()}
+                    >
+                      Log out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            ) : (
+              <Button
+                variant="hero"
+                className="w-full font-semibold"
+                onClick={handleSubmit}
+              >
+                Sign In
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -95,11 +150,12 @@ const Navbar = () => {
             {isMobileMenuOpen ? (
               <X className="h-6 w-6" />
             ) : (
-              <Menu className="h-6 w-6" />
+               <Menu className="h-6 w-6" />
             )}
           </button>
         </div>
 
+        {/* Mobile Navigation */}
         <motion.div
           initial={false}
           animate={{
@@ -121,9 +177,35 @@ const Navbar = () => {
             >
               Pricing
             </button>
-            <Button variant="hero" className="w-full" onClick={handleSubmit}>
-              {session?.user ? "Launch App" : "Sign In"}
-            </Button>
+            
+            {session?.user ? (
+              <div className="space-y-4 pt-2">
+                <Button variant="hero" className="w-full" onClick={handleSubmit}>
+                  Launch App
+                </Button>
+                <div className="pt-4 border-t border-border flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <Avatar className="h-10 w-10 border-2 border-primary/20">
+                      <AvatarImage src={(session.user as any).avatar || session.user.image} alt={session.user.name || "User"} />
+                      <AvatarFallback>{session.user.name?.charAt(0) || "U"}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-medium text-foreground">{session.user.name}</span>
+                      <span className="text-xs text-muted-foreground">
+                        Plan: <span className="text-primary font-semibold">{(session.user as any).plan || "Free"}</span>
+                      </span>
+                    </div>
+                  </div>
+                  <Button variant="ghost" size="sm" onClick={() => signOut()} className="text-destructive hover:text-destructive hover:bg-destructive/10">
+                    Log out
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <Button variant="hero" className="w-full" onClick={handleSubmit}>
+                Sign In
+              </Button>
+            )}
           </div>
         </motion.div>
       </div>
