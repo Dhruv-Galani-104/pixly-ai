@@ -50,7 +50,7 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       profile: async (profile) => {
-        await common({
+        const dbUser = await common({
           email: profile?.email!,
           name: profile.name!,
           avatar: profile.picture!,
@@ -59,10 +59,13 @@ export const authOptions: NextAuthOptions = {
           usageLimit: 3,
         });
         return {
-          id: profile.sub, // Use 'sub' as the ID from Google OAuth
-          email: profile.email,
-          name: profile.name,
-          image: profile.picture, // Use 'picture' for avatar
+          id: dbUser?.id || profile.sub,
+          email: dbUser?.email || profile.email,
+          name: dbUser?.name || profile.name,
+          image: dbUser?.avatar || profile.picture,
+          plan: dbUser?.plan,
+          usageCount: dbUser?.usageCount,
+          usageLimit: dbUser?.usageLimit,
         };
       },
     }),
@@ -77,9 +80,9 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.email = user.email;
         token.avatar = user.image;
-        token.plan = "Free";
-        token.usageCount = 0;
-        token.usageLimit = 3;
+        token.plan = user.plan || "Free";
+        token.usageCount = user.usageCount || 0;
+        token.usageLimit = user.usageLimit || 3;
       }
       return token;
     },

@@ -18,8 +18,21 @@ const Page = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const upgraded = urlParams.get("upgraded");
     const canceled = urlParams.get("payment_canceled");
+    const sessionId = urlParams.get("session_id");
 
-    if (upgraded) {
+    if (upgraded && sessionId) {
+      // Verify session and manually update DB for local environments
+      fetch("/api/verify-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId }),
+      })
+        .then(() => {
+          setPaymentStatus("upgraded");
+          window.history.replaceState({}, "", "/");
+        })
+        .catch(console.error);
+    } else if (upgraded) {
       setPaymentStatus("upgraded");
       // Clean up URL
       window.history.replaceState({}, "", "/");
