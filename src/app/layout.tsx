@@ -35,7 +35,7 @@ export default function RootLayout({
           <Navbar />
           {children}
         </Provider>
-        <script 
+        <Script 
           async 
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1942572265765591"
           crossorigin="anonymous"
