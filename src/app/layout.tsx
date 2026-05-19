@@ -1,8 +1,10 @@
+import Script from "next/script";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Provider from "./providers";
 import Navbar from "@/components/navbar";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +35,12 @@ export default function RootLayout({
           <Navbar />
           {children}
         </Provider>
+        <Script 
+          async 
+          strategy="afterInteractive"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1942572265765591"
+          crossOrigin="anonymous"
+        />
       </body>
     </html>
   );
