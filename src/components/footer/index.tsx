@@ -2,6 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Heart, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -24,7 +25,7 @@ const Footer = () => {
               <div className="absolute inset-0 h-8 w-8 text-secondary animate-glow-pulse opacity-50" />
             </div>
             <span className="text-2xl font-bold bg-gradient-primary !bg-clip-text text-transparent">
-              Pixly AI
+              Botiyo AI
             </span>
           </div>
 
@@ -35,17 +36,33 @@ const Footer = () => {
             seconds.
           </p>
 
+          {/* Links */}
+          <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm font-medium">
+            <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">
+              Blog
+            </Link>
+            <Link href="/contact" className="text-muted-foreground hover:text-primary transition-colors">
+              Contact Us
+            </Link>
+            <Link href="/terms" className="text-muted-foreground hover:text-primary transition-colors">
+              Terms & Conditions
+            </Link>
+            <Link href="/privacy" className="text-muted-foreground hover:text-primary transition-colors">
+              Privacy Policy
+            </Link>
+          </div>
+
           {/* Made with love */}
-          <div className="flex items-center justify-center space-x-2 text-sm text-muted-foreground">
+          <div className="flex items-center justify-center space-x-2 text-sm text-muted-foreground mb-6">
             <span>Made with</span>
             <Heart className="h-4 w-4 text-red-500 animate-pulse" />
             <span>for creators everywhere</span>
           </div>
 
           {/* Copyright */}
-          <div className="mt-8 pt-8 border-t border-card-border text-center">
+          <div className="pt-8 border-t border-card-border text-center">
             <p className="text-sm text-muted-foreground text-center">
-              © 2026 Pixly AI. All rights reserved.
+              © 2026 Botiyo AI. All rights reserved.
             </p>
           </div>
         </motion.div>

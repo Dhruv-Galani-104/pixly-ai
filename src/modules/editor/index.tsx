@@ -304,7 +304,7 @@ const Editor = () => {
   const handleExport = (format: string) => {
     if (!processedImage) return;
 
-    saveAs(processedImage, `pixly-AI-${Date.now()}.${format}`);
+    saveAs(processedImage, `botiyo-AI-${Date.now()}.${format}`);
   };
 
   return (

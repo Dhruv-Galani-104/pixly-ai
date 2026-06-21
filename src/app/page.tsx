@@ -4,6 +4,11 @@ import Editor from "@/modules/editor";
 import Features from "@/modules/features";
 import Hero from "@/modules/hero";
 import Pricing from "@/modules/pricing";
+import Stats from "@/modules/stats";
+import HowItWorks from "@/modules/how-it-works";
+import Testimonials from "@/modules/testimonials";
+import FAQ from "@/modules/faq";
+import ContactSection from "@/modules/contact-section";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle, Clock, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
@@ -84,10 +89,17 @@ const Page = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* === Core Landing Sections === */}
       <Hero />
+      <Stats />
+      <HowItWorks />
       <Features />
+      <Testimonials />
       <Pricing />
       <Editor />
+      <FAQ />
+      <ContactSection />
       <Footer />
     </div>
   );
