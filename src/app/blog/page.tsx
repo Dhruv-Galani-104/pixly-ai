@@ -1,13 +1,5 @@
 "use client";
 
-import type { Metadata } from "next";
-export const metadata: Metadata = {
-  title: "Blog — AI Photo Editing Tips, Tutorials & News",
-  description: "Read expert articles on AI background removal, generative fill, image upscaling, smart cropping, and more. Botiyo AI's creative tutorial hub for designers & creators.",
-  alternates: { canonical: "https://botiyo.live/blog" },
-  openGraph: { url: "https://botiyo.live/blog", title: "Botiyo AI Blog", description: "AI photo editing tutorials, tips, and creative guides." },
-};
-
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
